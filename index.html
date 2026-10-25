@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142d4e">
+  <title>Northstar Books — Comptabilité</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">N</div><div><strong>Northstar Books</strong><small>Comptabilité locale</small></div></div>
+      <div class="company-switch"><small>CORPORATION</small><strong id="companyNameSide">Ma corporation</strong><span>Canada · CAD</span></div>
+      <nav id="nav">
+        <button class="nav-item active" data-page="dashboard"><span>▦</span> Tableau de bord</button>
+        <button class="nav-item" data-page="transactions"><span>⇄</span> Transactions</button>
+        <button class="nav-item" data-page="accounts"><span>▤</span> Plan comptable</button>
+        <button class="nav-item" data-page="receipts"><span>▧</span> Reçus et documents</button>
+        <button class="nav-item" data-page="reports"><span>◫</span> Rapports</button>
+        <button class="nav-item" data-page="settings"><span>⚙</span> Paramètres</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="local-status"><span class="status-dot"></span><div><strong>Stockage local</strong><small>Les données restent dans ce navigateur</small></div></div><small class="version">Prototype local · v0.1</small></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow" id="pageEyebrow">VUE D'ENSEMBLE</div><h1 id="pageTitle">Tableau de bord</h1></div>
+        <div class="top-actions"><span class="period-label" id="todayLabel"></span><button class="button secondary" id="importCsvTop">Importer CSV</button><button class="button primary" id="newTransactionTop">+ Transaction</button></div>
+      </header>
+      <section id="pageContent"></section>
+      <footer>Northstar Books · Prototype local. Vérifie les écritures et les taxes avant toute utilisation officielle.</footer>
+    </main>
+  </div>
+
+  <dialog id="transactionDialog">
+    <form id="transactionForm" method="dialog">
+      <div class="dialog-head"><div><div class="eyebrow">NOUVELLE ÉCRITURE</div><h2>Ajouter une transaction</h2></div><button type="button" class="icon-button" data-close="transactionDialog">×</button></div>
+      <div class="form-grid">
+        <label>Date<input required type="date" id="txDate"></label>
+        <label>Type<select id="txType"><option value="expense">Dépense</option><option value="income">Revenu</option><option value="transfer">Virement</option><option value="owner">Apport / retrait propriétaire</option></select></label>
+        <label class="wide">Description<input required id="txDescription" placeholder="Ex. Abonnement logiciel"></label>
+        <label>Montant total (CAD)<input required type="number" min="0.01" step="0.01" id="txAmount" placeholder="0.00"></label>
+        <label>Compte bancaire / carte<select id="txCashAccount"></select></label>
+        <label>Catégorie comptable<select id="txCategory"></select></label>
+        <label>Taxes incluses<select id="txTax"><option value="none">Non précisées / aucune</option><option value="gst5">GST 5 % incluse</option><option value="hst13">HST 13 % incluse</option><option value="hst15">HST 15 % incluse</option></select><small>À confirmer selon la transaction et la province.</small></label>
+        <label class="wide">Note (facultatif)<textarea id="txNote" rows="2" placeholder="Objet professionnel, fournisseur, référence…"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="transactionDialog">Annuler</button><button class="button primary" type="submit">Enregistrer l'écriture</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="receiptDialog">
+    <form id="receiptForm" method="dialog">
+      <div class="dialog-head"><div><div class="eyebrow">JUSTIFICATIF</div><h2>Ajouter un document</h2></div><button type="button" class="icon-button" data-close="receiptDialog">×</button></div>
+      <label>Nom du document<input required id="receiptName" placeholder="Ex. Reçu Adobe — octobre"></label>
+      <label>Date du document<input type="date" id="receiptDate"></label>
+      <label>Type<select id="receiptType"><option>Reçu</option><option>Facture fournisseur</option><option>Relevé bancaire</option><option>Facture client</option><option>Autre</option></select></label>
+      <label>Fichier<input required type="file" id="receiptFile" accept=".pdf,image/*,.csv,.jpg,.jpeg,.png"></label>
+      <label>Transaction associée<select id="receiptTransaction"></select></label>
+      <p class="muted small">Les fichiers sont conservés dans la base locale du navigateur. Fais des sauvegardes régulières.</p>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="receiptDialog">Annuler</button><button class="button primary" type="submit">Enregistrer le document</button></div>
+    </form>
+  </dialog>
+
+  <input type="file" id="csvFile" accept=".csv,text/csv" hidden>
+  <input type="file" id="backupFile" accept=".json,application/json" hidden>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

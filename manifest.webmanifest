@@ -1,0 +1,10 @@
+{
+  "name": "Northstar Books — Comptabilité",
+  "short_name": "Northstar Books",
+  "description": "PWA locale de bookkeeping pour corporation canadienne",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7fa",
+  "theme_color": "#142d4e",
+  "lang": "fr-CA"
+}
